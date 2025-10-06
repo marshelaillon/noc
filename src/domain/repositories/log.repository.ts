@@ -1,5 +1,3 @@
-// Permite llamar métodos del datasource
-
 import { LogEntity, LogSeverityLevel } from '../entities/log.entity';
 
 export abstract class LogRepository {

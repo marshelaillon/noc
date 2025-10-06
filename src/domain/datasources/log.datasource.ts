@@ -1,6 +1,3 @@
-// Envía métodos al repositorio
-// Reglas de negocio
-
 import { LogEntity, LogSeverityLevel } from '../entities/log.entity';
 
 export abstract class LogDatasource {
