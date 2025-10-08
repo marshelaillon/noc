@@ -1,4 +1,4 @@
-import { EmailService } from '../../../presentation/email/email-service';
+import { EmailService } from '../../../infrastructure/services/email/email-service';
 import {
   LogEntity,
   LogEntityOptions,

@@ -1,10 +1,10 @@
 import { LogEntity, LogSeverityLevel } from '../../domain/entities/log.entity';
-import { LogDatasource } from '../../domain/datasources/log.datasource';
+import { LogDataSource } from '../../domain/datasources/log.datasource';
 import { LogRepository } from '../../domain/repositories/log.repository';
 
 export class LogRepositoryImpl implements LogRepository {
   // Fácilmente se puede cambiar por otro datasource (MongoDB, PostgreSQL, etc.)
-  constructor(private readonly logDatasource: LogDatasource) {}
+  constructor(private readonly logDatasource: LogDataSource) {}
 
   async saveLog(log: LogEntity): Promise<void> {
     this.logDatasource.saveLog(log);

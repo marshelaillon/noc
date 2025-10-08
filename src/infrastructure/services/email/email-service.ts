@@ -1,5 +1,5 @@
 import { createTransport } from 'nodemailer';
-import { envs } from '../../config/plugins/envs.plugin';
+import { envs } from '../../../config/plugins/envs.plugin';
 
 interface Attachment {
   filename: string;
