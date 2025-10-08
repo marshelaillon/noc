@@ -10,3 +10,26 @@ services:
       - ./mongo:/data/db
     ports:
       - 27017:27017
+
+  postgres:
+    image: postgres:13.22-alpine3.21
+    container_name: noc-postgres
+    restart: always
+    environment:
+      POSTGRES_URL: ${POSTGRES_URL}
+      POSTGRES_DB_NAME: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres:/var/lib/postgres/data/pgdata
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4:snapshot
+    container_name: pg_admin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 5050:80

@@ -1,29 +1,35 @@
-import { CheckService } from '../domain/use-cases/checks/check-service';
-import { SendEmailLogs } from '../domain/use-cases/email/send-email-logs';
-import { CronService } from './cron/cron-service';
-import { FileSystemDatasource } from '../infrastructure/datasources/file-system.datasource';
+import {
+  FileSystemDatasource,
+  MongoLogDataSource,
+  PostgresLogDataSource,
+} from '../infrastructure/datasources/';
 import { LogRepositoryImpl } from '../infrastructure/repositories/log.repository.impl';
-import { EmailService } from '../infrastructure/services/email/email-service';
-import { MongoLogDataSource } from '../infrastructure/datasources/mongo-log.datasource';
-import { LogSeverityLevel } from '../domain/entities/log.entity';
+import { CheckServiceMultiple } from '../domain/use-cases/checks/check-service-multiple';
+import { CronService } from './cron/cron-service';
 
-const logRepository: LogRepositoryImpl = new LogRepositoryImpl(
+const fsLogRepository: LogRepositoryImpl = new LogRepositoryImpl(
   new FileSystemDatasource()
-  //new MongoLogDataSource()
 );
-const emailService = new EmailService();
+const mongoLogRepository: LogRepositoryImpl = new LogRepositoryImpl(
+  new MongoLogDataSource()
+);
+const postgresLogRepository: LogRepositoryImpl = new LogRepositoryImpl(
+  new PostgresLogDataSource()
+);
+
+const repositories = [
+  fsLogRepository,
+  mongoLogRepository,
+  postgresLogRepository,
+];
 
 export class Server {
   public static async start() {
     console.log('Server started...');
 
-    // Mandar email
-    // const mail = '';
-    // new SendEmailLogs(emailService, fileSystemLogRepository).execute(mail);
-
-    // CronService.createJob('*/5 * * * * *', () => {
-    //   const url = 'https://chatgpt.com';
-    //   new CheckService(logRepository, undefined, undefined).execute(url);
-    // });
+    CronService.createJob('*/5 * * * * *', () => {
+      const url = 'https://chatgpt.com';
+      new CheckServiceMultiple(repositories, undefined, undefined).execute(url);
+    });
   }
 }

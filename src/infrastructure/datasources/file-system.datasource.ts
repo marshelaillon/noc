@@ -32,6 +32,7 @@ export class FileSystemDatasource implements LogDataSource {
     if (newLog.level === LogSeverityLevel.medium)
       fs.appendFileSync(this.mediumLogsPath, logAsJson);
     else fs.appendFileSync(this.highLogsPath, logAsJson);
+    console.log('New Log created in FS');
   }
 
   private getLogsFromFile = (path: string): LogEntity[] => {

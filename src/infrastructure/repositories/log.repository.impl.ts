@@ -3,7 +3,6 @@ import { LogDataSource } from '../../domain/datasources/log.datasource';
 import { LogRepository } from '../../domain/repositories/log.repository';
 
 export class LogRepositoryImpl implements LogRepository {
-  // Fácilmente se puede cambiar por otro datasource (MongoDB, PostgreSQL, etc.)
   constructor(private readonly logDatasource: LogDataSource) {}
 
   async saveLog(log: LogEntity): Promise<void> {
